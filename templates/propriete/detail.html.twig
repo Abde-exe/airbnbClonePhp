@@ -1,0 +1,47 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}detail
+{% endblock %}
+
+{% block content %}
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-8">
+				<img class="img-responsive  img-thumbnail " src=" {{asset('photoProprietes/' ~ propriete.photos)}} "/>
+			</div>
+			<div class=" col-md-4">
+				<h1>{{ propriete.titre }}</h1>
+				{# <h2>{{ propriete.ville }}</h2> #}
+				<div class="text-primary" style="font-size:4rem; font-weight:bold;">{{ propriete.prixJournalier }}
+					€/nuit
+				</div>
+				<a href="#" class="btn btn-primary">Réserver</a>
+			</div>
+			<p>{{propriete.description | nl2br}}</p>
+			<div class="row">
+				<div class="col-md-8">
+					<table class="table table-striped">
+						<tr>
+							<td>Trucs</td>
+							<td>Trucs</td>
+						</tr>
+						<tr>
+							<td>Chambres</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>Pieces</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>Etc</td>
+							<td>4</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-4">
+					<h3>Specificité</h3>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

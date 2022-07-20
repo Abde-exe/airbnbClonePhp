@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+	Profil
+{% endblock %}
+
+{% block content %}
+	{% if app.request.get('_route')=="admin_add_vehicule" %}
+		<h1>Ajout d'un vehicule</h1>
+	{% elseif app.request.get('_route')=="admin_update_vehicule" %}
+		<h1>Modification d'un vehicule</h1>
+	{% endif %}
+	<div class="container">
+		{{form(formPropriete)}}
+		</div>
+
+	{% endblock %}

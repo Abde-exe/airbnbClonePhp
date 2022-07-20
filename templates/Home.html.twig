@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+
+	<div class="d-flex flex-wrap p-5 justify-content-evenly g-5">
+		{% for propriete in proprietes %}
+			<div class="card mx-5 my-5  col-sm-3 bord ">
+				<img src="{{asset('photoProprietes/' ~ propriete.photos)}}" class=" rounded"/>
+
+
+				<div class="card-body">
+					<h5 class="card-title">{{propriete.titre}}</h5>
+					<h6 class="card-subtitle text-muted">Localisation</h6>
+					<p>Ville</p>
+					<p>Appart</p>
+
+					{{propriete.prixJournalier}}
+				</div>
+				<a class="btn btn-primary badge toast show" href="{{path('propriete_detail',{id:propriete.id})}}">Voir plus</a>
+			</div>
+		{% endfor %}
+
+
+	</div>
+
+
+{% endblock %}
