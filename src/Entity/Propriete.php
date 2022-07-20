@@ -33,6 +33,10 @@ class Propriete
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
 
+    #[ORM\ManyToOne(inversedBy: 'proprietes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +110,18 @@ class Propriete
     public function setUser(?User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
