@@ -18,7 +18,7 @@ class SearchData
 
     /**
      * categories
-     * @var Category[]
+     * @var null|Category[]
      */
     public $categories = [];
 

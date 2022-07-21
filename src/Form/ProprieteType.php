@@ -31,6 +31,9 @@ class ProprieteType extends AbstractType
                     'for' => 'input-file-now-costom-1'
                 ]
             ])
+            ->add('lits')
+            ->add('chambres')
+            ->add('sdb',)
             ->add('prixJournalier')
             ->add('Valider', SubmitType::class);
     }

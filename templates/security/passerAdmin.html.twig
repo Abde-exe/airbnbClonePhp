@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+	<h2>Passer
+		{{user.nom}}
+		{{user.prenom}}
+		en Admin</h2>
+	{{form(formAdmin)}}{% endblock %}

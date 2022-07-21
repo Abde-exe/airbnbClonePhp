@@ -12,12 +12,12 @@
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav me-auto">
 					<li class="nav-item">
-						<a class="nav-link active" href="{{path('app_home')}}">Accueil
+						<a class="nav-link" href="{{path('app_home')}}">Accueil
 							<span class="visually-hidden">(current)</span>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">Produits</a>
+						<a class="nav-link" href="{{path('list_prop')}}">Propriétés</a>
 					</li>
 					{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
 						<li class="nav-item">
@@ -27,46 +27,23 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{path('app_register')}}">Inscription</a>
 						</li>
+
+
+						{% if is_granted("IS_AUTHENTICATED_FULLY") and is_granted("ROLE_ADMIN") %}
+							<a class="nav-link" href="{{path('app_admin',{id:app.user.id })}}" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+
+						{% endif %}
 					{% else %}
-						<li class="nav-item">
-							<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{{path('app_profil',{id:app.user.id })}}">Profil</a>
 						</li>
-
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profil</a>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="">Modifier profiil</a>
-								<a class="dropdown-item" href="">Voir proprietes</a>
-								<a class="dropdown-item" href="">Ajouter propriete</a>
-
-								<a class="dropdown-item" href="#">Liste utilisateurs</a>
-								<div class="dropdown-divider"></div>
-							</div>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
 						</li>
-						{# if admin #}
-						{# <li class="nav-item dropdown">
-																																																																																																<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-																																																																																																<div class="dropdown-menu">
-																																																																																																	<a class="dropdown-item" href="">Liste produits</a>
-																																																																																																	<a class="dropdown-item" href="">Ajouter produit</a>
-																																																																																																	<a class="dropdown-item" href="">Ajouter categorie</a>
-																																																																																										
-																																																																																																	<a class="dropdown-item" href="#">Liste utilisateurs</a>
-																																																																																																	<div class="dropdown-divider"></div>
-																																																																																																	<a class="dropdown-item" href="#">Separated link</a>
-																																																																																																</div>
-																																																																																															</li> #}
-
 					{% endif %}
 
 				</ul>
-				<form class="d-flex">
-					<input class="form-control me-sm-2" type="text" placeholder="Rechercher" spellcheck="false" data-ms-editor="true">
-					<button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
-				</form>
+
 			</div>
 		</div>
 	</nav>

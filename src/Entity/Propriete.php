@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProprieteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,6 +38,23 @@ class Propriete
     #[ORM\ManyToOne(inversedBy: 'proprietes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    #[ORM\ManyToMany(targetEntity: Option::class, mappedBy: 'proprietes')]
+    private Collection $options;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $lits = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $chambres = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $sdb = null;
+
+    public function __construct()
+    {
+        $this->options = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,6 +141,69 @@ class Propriete
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Option>
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+            $option->addPropriete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): self
+    {
+        if ($this->options->removeElement($option)) {
+            $option->removePropriete($this);
+        }
+
+        return $this;
+    }
+
+    public function getLits(): ?int
+    {
+        return $this->lits;
+    }
+
+    public function setLits(?int $lits): self
+    {
+        $this->lits = $lits;
+
+        return $this;
+    }
+
+    public function getChambres(): ?int
+    {
+        return $this->chambres;
+    }
+
+    public function setChambres(?int $chambres): self
+    {
+        $this->chambres = $chambres;
+
+        return $this;
+    }
+
+    public function getSdb(): ?int
+    {
+        return $this->sdb;
+    }
+
+    public function setSdb(?int $sdb): self
+    {
+        $this->sdb = $sdb;
 
         return $this;
     }

@@ -20,29 +20,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ProprieteRepository $repo, Request $request)
     {
-        //filtres recherche
-        $data = new SearchData();
-        $data->page = $request->get('page', 1);
-        $form = $this->createForm(SearchForm::class, $data);
-        $form->handleRequest($request);
-        //tous les biens
-        $proprietes = $repo->findSearch($data);
+
+        $proprietes = $repo->findAll();
 
         return $this->render('Home.html.twig', [
             "proprietes" => $proprietes,
-            'form' => $form->createView(),
-        ]);
-    }
-    #[Route('/profil/{id}', name: 'app_profil')]
-    public function afficherProfil(ManagerRegistry $doctrine, $id, UserRepository $repo)
-    {
-        $user = $repo->find($id);
-        $proprietes = $doctrine->getRepository(Propriete::class)->findBy(["User" => $id]);
-
-        return $this->render('Profil.html.twig', [
-            "proprietes" => $proprietes,
-            "user" => $user,
-
         ]);
     }
 }

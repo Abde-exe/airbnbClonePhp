@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
+use App\Entity\Option;
 use DateTime;
 use App\Entity\Propriete;
 use App\Form\ProprieteType;
+use App\Form\SearchForm;
 use App\Repository\ProprieteRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +19,24 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ProprieteController extends AbstractController
 {
+
+
+    #[Route('/list-prop', name: 'list_prop')]
+    public function index(ProprieteRepository $repo, Request $request)
+    {
+        //filtres recherche
+        $data = new SearchData();
+        $data->page = $request->get('page', 1);
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+        //tous les biens
+        $proprietes = $repo->findSearch($data);
+
+        return $this->render('propriete/Liste.html.twig', [
+            "proprietes" => $proprietes,
+            'form' => $form->createView(),
+        ]);
+    }
     #[Route('/propriete-add', name: 'propriete_add')]
     public function add(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger)
     {
@@ -72,8 +93,10 @@ class ProprieteController extends AbstractController
     #[Route('/propriete-update/{id}', name: 'propriete_update')]
     public function updateProp($id, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger)
     {
+        $option = new Option();
         $propriete = $doctrine->getRepository(Propriete::class)->find($id);
-        $form = $this->createForm(proprieteType::class, $propriete);
+        $propriete->addOption($option);
+        $form = $this->createForm(ProprieteType::class, $propriete);
         $form->handleRequest($request);
 
         $image = $propriete->getPhotos();
@@ -124,5 +147,17 @@ class ProprieteController extends AbstractController
         $this->addFlash("success", "Propriete a bien été supprimé");
 
         return $this->redirectToRoute("app_home");
+    }
+
+
+
+    #[Route('/admin-prop', name: 'admin_proprietes')]
+    public function adminProp(ProprieteRepository $repo, Request $request)
+    {
+        $proprietes = $repo->findAll();
+
+        return $this->render('admin/Proprietes.html.twig', [
+            "proprietes" => $proprietes,
+        ]);
     }
 }

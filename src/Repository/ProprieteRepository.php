@@ -60,7 +60,7 @@ class ProprieteRepository extends ServiceEntityRepository
         }
 
         $query = $query->getQuery();
-        return $this->paginator->paginate($query, $search->page, 15);
+        return $this->paginator->paginate($query, $search->page, 6);
     }
     public function add(Propriete $entity, bool $flush = false): void
     {
