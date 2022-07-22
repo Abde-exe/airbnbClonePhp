@@ -42,7 +42,7 @@ class UserController extends AbstractController
         $users = $repo->findAll();
         $proprietes = $propRepo->findAll();
 
-        return $this->render('admin/Admin.html.twig', [
+        return $this->render('Admin/Admin.html.twig', [
             "proprietes" => $proprietes,
             "users" => $users,
             "user" => $user,
