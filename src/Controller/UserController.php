@@ -61,7 +61,7 @@ class UserController extends AbstractController
             "proprietes" => $proprietes,
             "users" => $users,
             "user" => $user,
-            "categories" => $$categories,
+            "categories" => $categories,
             "formCategory" => $formC->createView()
 
         ]);
