@@ -169,9 +169,6 @@ class ProprieteController extends AbstractController
 
         return $this->redirectToRoute("app_home");
     }
-
-
-
     #[Route('/admin-prop', name: 'admin_proprietes')]
     public function adminProp(ProprieteRepository $repo, CategoryRepository $repoC)
     {
@@ -181,32 +178,6 @@ class ProprieteController extends AbstractController
         return $this->render('Admin/Proprietes.html.twig', [
             "proprietes" => $proprietes,
             "categories" => $$categories,
-        ]);
-    }
-
-    #[Route('/category-add', name: 'category_add')]
-    public function addCategory(Request $request, ManagerRegistry $doctrine)
-    {
-        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $this->addFlash('error', "Veuillez vous connecter pour accéder à cette page");
-            return $this->redirectToRoute('app_login');
-        }
-
-        $category = new Category();
-
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $manager = $doctrine->getManager();
-            $manager->persist($category);
-            $manager->flush();
-            $this->addFlash("success", "Category a bien été ajouté");
-            return $this->redirectToRoute("app_home");
-        }
-        return $this->render("Admin/Proprietes.html.twig", [
-            "formCategory" => $form->createView()
         ]);
     }
 }
