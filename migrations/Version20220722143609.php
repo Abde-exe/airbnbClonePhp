@@ -41,10 +41,5 @@ final class Version20220722143609 extends AbstractMigration
         $this->addSql('ALTER TABLE reservation_detail DROP FOREIGN KEY FK_66F73608B83297E7');
         $this->addSql('ALTER TABLE propriete DROP FOREIGN KEY FK_73A85B93A76ED395');
         $this->addSql('ALTER TABLE reservation DROP FOREIGN KEY FK_42C84955A76ED395');
-        $this->addSql('DROP TABLE category');
-        $this->addSql('DROP TABLE panier');
-        $this->addSql('DROP TABLE propriete');
-        $this->addSql('DROP TABLE reservation');
-        $this->addSql('DROP TABLE reservation_detail');
     }
 }
