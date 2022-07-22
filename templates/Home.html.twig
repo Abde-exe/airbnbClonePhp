@@ -5,31 +5,30 @@
 		<h1>Trouvez l'endroit idéal pour vos vacances
 		</h1>
 	</div>
-	<div class="container row mt-4 ">
-		<div class="d-flex flex-nowrap">
+	<div class="d-flex flex-nowrap">
 
 
-			<div class="flex row col-12">
-				{% for propriete in proprietes %}
-					<div class="card mx-5 my-5  col-sm-3 bord ">
-						<img src="{{asset('photoProprietes/' ~ propriete.photos)}}" class=" rounded"/>
+		<div class="flex row col-12">
+			{% for propriete in proprietes %}
+				<div class="card mx-5 my-5  col-sm-3 bord ">
+					<img src="{{asset('photoProprietes/' ~ propriete.photos)}}" class=" rounded"/>
 
 
-						<div class="card-body">
-							<h4 class="card-title">{{propriete.titre}}</h4>
-							<h5 class="card-subtitle text-muted">{{propriete.ville}}</h5>
-							<div class="text-muted">
-								{{propriete.pays}}
-							</br>
-							{{propriete.category.name}}
+					<div class="card-body">
+						<h4 class="card-title">{{propriete.titre}}</h4>
+						<h5 class="card-subtitle text-muted">{{propriete.ville}}</h5>
+						<div class="text-muted">
+							{{propriete.pays}}
+						</br>
+						{{propriete.category.name}}
 
-						</div>
-						<strong>{{propriete.prixJournalier}}€</strong>/nuit
 					</div>
-					<a class="btn btn-primary badge toast show" href="{{path('propriete_detail',{id:propriete.id})}}">Voir plus</a>
+					<strong>{{propriete.prixJournalier}}€</strong>/nuit
 				</div>
-			{% endfor %}
-		</div>
+				<a class="btn btn-primary   show " href="{{path('propriete_detail',{id:propriete.id})}}">Voir plus</a>
+			</div>
+		{% endfor %}
 	</div>
+
 
 {% endblock %}
