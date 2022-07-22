@@ -178,7 +178,7 @@ class ProprieteController extends AbstractController
         $proprietes = $repo->findAll();
         $categories = $repoC->findAll();
 
-        return $this->render('admin/Proprietes.html.twig', [
+        return $this->render('Admin/Proprietes.html.twig', [
             "proprietes" => $proprietes,
             "categories" => $$categories,
         ]);
