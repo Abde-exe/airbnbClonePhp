@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Entity\Panier;
 use DateTime;
 use App\Entity\Propriete;
+use App\Form\CategoryType;
 use App\Form\ParamForm;
 use App\Form\ProprieteType;
 use App\Form\SearchForm;
@@ -178,11 +179,12 @@ class ProprieteController extends AbstractController
         }
         $category = new Category();
 
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+        $formC = $this->createForm(CategoryType::class, $category);
+
+        $formC->handleRequest($request);
         $proprietes = $repo->findAll();
         $categories = $repoC->findAll();
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formC->isSubmitted() && $formC->isValid()) {
 
             $manager = $doctrine->getManager();
             $manager->persist($category);
@@ -190,10 +192,12 @@ class ProprieteController extends AbstractController
             $this->addFlash("success", "Category a bien été ajouté");
             return $this->redirectToRoute("app_home");
         }
+
+
         return $this->render('Admin/Proprietes.html.twig', [
             "proprietes" => $proprietes,
             "categories" => $$categories,
-            "formCategory" => $form->createView()
+            "formCategory" => $formC->createView()
         ]);
     }
 }
