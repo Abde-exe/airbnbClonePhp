@@ -53,6 +53,11 @@ DirectoryIndex index.php
     # Rewrite all other queries to the front controller.
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ %{ENV:BASE}/index.php [L]
+
+
+    RewriteCond %{HTTP_HOST} ^sub\.domain\.(?:lc|nl)$ [NC]
+    RewriteCond %{REQUEST_URI} !\.(png|woff|tff)$
+    RewriteRule $(.*) app_dev.php$1 [NC,L,QSA]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
