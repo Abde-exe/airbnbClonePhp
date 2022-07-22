@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Propriete;
+use App\Form\CategoryType;
 use App\Repository\ProprieteRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
