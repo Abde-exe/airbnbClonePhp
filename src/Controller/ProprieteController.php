@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
-use App\Entity\Option;
 use DateTime;
 use App\Entity\Propriete;
 use App\Form\ProprieteType;
@@ -93,9 +92,7 @@ class ProprieteController extends AbstractController
     #[Route('/propriete-update/{id}', name: 'propriete_update')]
     public function updateProp($id, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger)
     {
-        $option = new Option();
         $propriete = $doctrine->getRepository(Propriete::class)->find($id);
-        $propriete->addOption($option);
         $form = $this->createForm(ProprieteType::class, $propriete);
         $form->handleRequest($request);
 

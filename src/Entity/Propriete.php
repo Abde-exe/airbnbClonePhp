@@ -39,8 +39,7 @@ class Propriete
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToMany(targetEntity: Option::class, mappedBy: 'proprietes')]
-    private Collection $options;
+
 
     #[ORM\Column(nullable: true)]
     private ?int $lits = null;
@@ -51,10 +50,13 @@ class Propriete
     #[ORM\Column(nullable: true)]
     private ?int $sdb = null;
 
-    public function __construct()
-    {
-        $this->options = new ArrayCollection();
-    }
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $ville = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $pays = null;
+
+
 
     public function getId(): ?int
     {
@@ -145,32 +147,7 @@ class Propriete
         return $this;
     }
 
-    /**
-     * @return Collection<int, Option>
-     */
-    public function getOptions(): Collection
-    {
-        return $this->options;
-    }
 
-    public function addOption(Option $option): self
-    {
-        if (!$this->options->contains($option)) {
-            $this->options[] = $option;
-            $option->addPropriete($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOption(Option $option): self
-    {
-        if ($this->options->removeElement($option)) {
-            $option->removePropriete($this);
-        }
-
-        return $this;
-    }
 
     public function getLits(): ?int
     {
@@ -204,6 +181,30 @@ class Propriete
     public function setSdb(?int $sdb): self
     {
         $this->sdb = $sdb;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?string $pays): self
+    {
+        $this->pays = $pays;
 
         return $this;
     }

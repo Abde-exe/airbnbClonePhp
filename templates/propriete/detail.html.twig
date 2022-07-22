@@ -11,36 +11,35 @@
 			</div>
 			<div class=" col-md-4">
 				<h1>{{ propriete.titre }}</h1>
-				{# <h2>{{ propriete.ville }}</h2> #}
 				<div class="text-primary" style="font-size:4rem; font-weight:bold;">{{ propriete.prixJournalier }}
 					€/nuit
 				</div>
-				<a href="#" class="btn btn-primary">Réserver</a>
+				<a href="{{path('add_panier',{id:propriete.id})}}" class="btn btn-primary">Réserver</a>
 			</div>
-			<p>{{propriete.description | nl2br}}</p>
+			<div class="col-8 mt-4 mb-4">
+				<p>{{propriete.description | nl2br}}</p>
+			</div>
 			<div class="row">
 				<div class="col-md-8">
 					<table class="table table-striped">
 						<tr>
-							<td>Trucs</td>
-							<td>Trucs</td>
-						</tr>
-						<tr>
 							<td>Chambres</td>
-							<td>4</td>
+							<td>{{propriete.chambres}}</td>
 						</tr>
 						<tr>
-							<td>Pieces</td>
-							<td>4</td>
+							<td>Salle de bains</td>
+							<td>{{propriete.sdb}}</td>
 						</tr>
 						<tr>
-							<td>Etc</td>
-							<td>4</td>
+							<td>Lits</td>
+							<td>{{propriete.lits}}</td>
 						</tr>
+
 					</table>
 				</div>
 				<div class="col-md-4">
-					<h3>Specificité</h3>
+					<h3>{{propriete.Ville}},
+						{{propriete.pays}}</h3>
 				</div>
 			</div>
 		</div>

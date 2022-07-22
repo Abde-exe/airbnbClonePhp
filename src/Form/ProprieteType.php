@@ -18,6 +18,8 @@ class ProprieteType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
+            ->add('pays')
+            ->add('ville')
             ->add('category', EntityType::class, [
                 "class" => Category::class,
                 "choice_label" => "name",
