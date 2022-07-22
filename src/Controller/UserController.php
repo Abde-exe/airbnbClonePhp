@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Propriete;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProprieteRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,20 +33,36 @@ class UserController extends AbstractController
             "proprietes" => $proprietes,
             "user" => $user,
 
+
         ]);
     }
 
     #[Route('/admin/{id}', name: 'app_admin')]
-    public function afficherAdmin(ManagerRegistry $doctrine, $id, UserRepository $repo, ProprieteRepository $propRepo)
+    public function afficherAdmin(ManagerRegistry $doctrine, $id, UserRepository $repo, ProprieteRepository $propRepo, CategoryRepository $repoC, Request $request)
     {
         $user = $repo->find($id);
         $users = $repo->findAll();
+
         $proprietes = $propRepo->findAll();
 
+        $categories = $repoC->findAll();
+        $category = new Category();
+        $formC = $this->createForm(CategoryType::class, $category);
+        $formC->handleRequest($request);
+        if ($formC->isSubmitted() && $formC->isValid()) {
+
+            $manager = $doctrine->getManager();
+            $manager->persist($category);
+            $manager->flush();
+            $this->addFlash("success", "Category a bien été ajouté");
+            return $this->redirectToRoute("app_home");
+        }
         return $this->render('Admin/Admin.html.twig', [
             "proprietes" => $proprietes,
             "users" => $users,
             "user" => $user,
+            "categories" => $$categories,
+            "formCategory" => $formC->createView()
 
         ]);
     }

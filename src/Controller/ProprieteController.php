@@ -171,33 +171,20 @@ class ProprieteController extends AbstractController
         return $this->redirectToRoute("app_home");
     }
     #[Route('/admin-prop', name: 'admin_proprietes')]
-    public function adminProp(ProprieteRepository $repo, CategoryRepository $repoC, Request $request, ManagerRegistry $doctrine)
+    public function adminProp(ProprieteRepository $repo)
     {
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $this->addFlash('error', "Veuillez vous connecter pour accéder à cette page");
             return $this->redirectToRoute('app_login');
         }
-        $category = new Category();
 
-        $formC = $this->createForm(CategoryType::class, $category);
-
-        $formC->handleRequest($request);
         $proprietes = $repo->findAll();
-        $categories = $repoC->findAll();
-        if ($formC->isSubmitted() && $formC->isValid()) {
 
-            $manager = $doctrine->getManager();
-            $manager->persist($category);
-            $manager->flush();
-            $this->addFlash("success", "Category a bien été ajouté");
-            return $this->redirectToRoute("app_home");
-        }
 
 
         return $this->render('Admin/Proprietes.html.twig', [
             "proprietes" => $proprietes,
-            "categories" => $$categories,
-            "formCategory" => $formC->createView()
+
         ]);
     }
 }
