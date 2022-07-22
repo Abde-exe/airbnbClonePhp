@@ -34,40 +34,41 @@ class ReservationController extends AbstractController
             $this->addFlash("error", "Veuillez vous connecter ou vous inscrire pour passer reservation");
             return $this->redirectToRoute("app_login");
         }
-        $dataPanier = [];
-        $total = 0;
-        $repoRes->add($reservation);
+        // $dataPanier = [];
+        // $total = 0;
+        // $repoRes->add($reservation);
 
-        foreach ($panier as $id => $nbPers) {
-            $propriete = $repo->find($id);
-            $dataPanier[] = [
-                "propriete" => $propriete,
-                "nbPers" => $nbPers,
-                "sous-total" => $propriete * $nbPers
-            ];
-            $total += $propriete->getPrixJournalier() * $nbPers;
-        }
-        $reservation->setUser($user)
-            ->setDate(new DateTime("now"))
-            ->setMontant($total);
+        // foreach ($panier as $id => $nbPers) {
+        //     $propriete = $repo->find($id);
+        //     $dataPanier[] = [
+        //         "propriete" => $propriete,
+        //         "nbPers" => $nbPers,
+        //         "sous-total" => $propriete * $nbPers
+        //     ];
+        //     $total += $propriete->getPrixJournalier() * $nbPers;
+        // }
+        // $reservation->setUser($user)
+        //     ->setDate(new DateTime("now"))
+        //     ->setMontant($total);
 
-        $repoRes->add($reservation);
-        foreach ($dataPanier as $key => $value) {
-            $reservationDetail = new ReservationDetail();
-            $propriete = $value["propriete"];
-            $nbPers = $value["nbPers"];
-            $sousTotal = $value["sousTotal"];
-            $reservationDetail->setReservation($reservation)
-                ->setPropriete($propriete)
-                ->setNbPers($nbPers)
-                ->setPrix($sousTotal);
-            $repoDet->add($reservationDetail);
-        }
-        $manager = $doctrine->getManager();
-        // $manager->persist();
-        $manager->flush();
+        // $repoRes->add($reservation);
+        // foreach ($dataPanier as $key => $value) {
+        //     $reservationDetail = new ReservationDetail();
+        //     $propriete = $value["propriete"];
+        //     $nbPers = $value["nbPers"];
+        //     $sousTotal = $value["sousTotal"];
+        //     $reservationDetail->setReservation($reservation)
+        //         ->setPropriete($propriete)
+        //         ->setNbPers($nbPers)
+        //         ->setPrix($sousTotal);
+        //     $repoDet->add($reservationDetail);
+        // }
+        // $manager = $doctrine->getManager();
+        // // $manager->persist();
+        // $manager->flush();
         $session->remove('panier');
         $this->addFlash("success", "reservation avec succès");
-        $this->redirectToRoute("app_home");
+
+        return  $this->redirectToRoute("app_home");
     }
 }

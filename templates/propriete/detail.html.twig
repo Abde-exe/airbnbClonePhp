@@ -14,6 +14,23 @@
 				<div class="text-primary" style="font-size:4rem; font-weight:bold;">{{ propriete.prixJournalier }}
 					€/nuit
 				</div>
+				<div class="row mt-5">
+					<div class="col-md-12">
+						{{form_start(form)}}
+						<h4>
+							Nombre de personnes</h4>
+						{{form_row(form.nbPers)}}
+						<h4>
+							Nombre de personnes</h4>
+						{{form_row(form.dateE)}}
+						<h4>
+							Nombre de personnes</h4>
+						{{form_row(form.dateS)}}
+
+						{{form_end(form)}}
+					</div>
+
+				</div>
 				<a href="{{path('add_panier',{id:propriete.id})}}" class="btn btn-primary">Réserver</a>
 			</div>
 			<div class="col-8 mt-4 mb-4">
@@ -38,7 +55,7 @@
 					</table>
 				</div>
 				<div class="col-md-4">
-					<h3>{{propriete.Ville}},
+					<h3>{{propriete.Ville}}
 						{{propriete.pays}}</h3>
 				</div>
 			</div>

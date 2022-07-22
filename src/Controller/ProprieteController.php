@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Data\ParamReservation;
 use App\Data\SearchData;
+use App\Entity\Panier;
 use DateTime;
 use App\Entity\Propriete;
+use App\Form\ParamForm;
 use App\Form\ProprieteType;
 use App\Form\SearchForm;
 use App\Repository\ProprieteRepository;
@@ -15,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ProprieteController extends AbstractController
 {
@@ -81,13 +85,31 @@ class ProprieteController extends AbstractController
         ]);
     }
     #[Route('/propriete-detail/{id}', name: 'propriete_detail')]
-    public function voirProp($id, ProprieteRepository $repo)
+    public function voirProp($id, ProprieteRepository $repo, Request $request, SessionInterface $session)
     {
+        $data = new ParamReservation();
+        $form = $this->createForm(ParamForm::class, $data);
+        $form->handleRequest($request);
+        // dd($data);
         $propriete = $repo->find($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $panier = new Panier();
+            $panier = $session->get('panier', []);
+            // if (empty($panier)) {
+            $panier = ['propriete' => $propriete, 'dateE' => $data->dateE, 'dateS' => $data->dateS, 'nbPers' => $data->nbPers];
+            // } else {
+            //     $panier[$id]++;
+            // }
+            $session->set("panier", $panier);
+            //dd($session->get("panier"));
+            return $this->redirectToRoute('app_panier');
+        }
         return $this->render('propriete/detail.html.twig', [
             'propriete' => $propriete,
+            'form' => $form->createView(),
         ]);
     }
+
 
     #[Route('/propriete-update/{id}', name: 'propriete_update')]
     public function updateProp($id, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger)
