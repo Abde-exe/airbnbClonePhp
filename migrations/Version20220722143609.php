@@ -46,6 +46,5 @@ final class Version20220722143609 extends AbstractMigration
         $this->addSql('DROP TABLE propriete');
         $this->addSql('DROP TABLE reservation');
         $this->addSql('DROP TABLE reservation_detail');
-        $this->addSql('DROP TABLE user');
     }
 }
